@@ -1,1 +1,93 @@
-<h1>placeholder</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quote Fetcher</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #f5f7fa;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      width: 75vw; /* 75% of viewport width */
+      max-width: 800px;
+      min-width: 260px;
+    }
+
+    h1 {
+      font-size: clamp(1.6rem, 4vw, 2.5rem);
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    #quote {
+      min-height: 120px;
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      line-height: 1.4;
+      color: #444;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      margin-bottom: 25px;
+      transition: opacity 0.3s ease;
+    }
+
+    button {
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background: #0066ff;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.1s;
+    }
+
+    button:hover {
+      background: #0052cc;
+    }
+
+    button:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Quote Generator</h1>
+    <div id="quote">Click the button to load a quote!</div>
+    <button id="fetchBtn">Get Quote</button>
+  </div>
+
+  <script>
+    async function loadQuote() {
+      const quoteBox = document.getElementById("quote");
+      quoteBox.style.opacity = 0.4;
+
+      try {
+        const res = await fetch("https://quote.cs260.click");
+        const text = await res.text();
+        quoteBox.textContent = text;
+      } catch (err) {
+        quoteBox.textContent = "Error fetching quote.";
+      }
+
+      quoteBox.style.opacity = 1;
+    }
+
+    document.getElementById("fetchBtn").addEventListener("click", loadQuote);
+  </script>
+</body>
+</html>
