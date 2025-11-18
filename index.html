@@ -78,8 +78,8 @@
 
       try {
         const res = await fetch("https://quote.cs260.click");
-        const text = await res.text();
-        quoteBox.textContent = text;
+        const text = await res.json();
+        quoteBox.textContent = text.quote;
       } catch (err) {
         quoteBox.textContent = "Error fetching quote.";
       }
